@@ -1,0 +1,52 @@
+model VideoMeta {
+  fileCode    String   @id
+  title       String
+  description String   @default("")
+  tags        String[]
+  thumbnail   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("video_meta")
+}
+
+model HiddenVideo {
+  fileCode  String   @id
+  createdAt DateTime @default(now())
+
+  @@map("hidden_video")
+}
+
+model VideoComment {
+  id        String   @id @default(cuid())
+  fileCode  String
+  body      String
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([fileCode, createdAt])
+  @@map("video_comment")
+}
+
+model VideoLike {
+  fileCode  String
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, fileCode])
+  @@index([fileCode])
+  @@map("video_like")
+}
+
+model VideoSave {
+  fileCode  String
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, fileCode])
+  @@index([fileCode])
+  @@map("video_save")
+}
