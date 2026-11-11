@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "bun check",
+    "db:push": "prisma db push",
     "create-admin": "bun scripts/create-admin.ts"
   },
   "dependencies": {
